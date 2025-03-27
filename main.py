@@ -65,4 +65,14 @@ class InvoiceAutomation(QWidget):
         self.setLayout(layout)
 
     def create_invoice(self):
-        pass
+        print("Creating invoice with the following data:")
+        for key, entry in self.entries.items():
+            print(f"{key}: {entry.text()}")
+        print(f"Payment Method: {self.payment_dropdown.currentText()}")
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = InvoiceAutomation()
+    window.show()
+    sys.exit(app.exec_())
