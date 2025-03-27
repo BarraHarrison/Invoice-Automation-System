@@ -1,5 +1,3 @@
-# Invoice Automation System
-# An Invoice is basically a request for payment
 import os 
 import subprocess
 import tkinter as tk 
@@ -14,15 +12,6 @@ class InvoiceAutomation:
         self.root = tk.Tk()
         self.root.title("Invoice Automation")
         self.root.geometry("500x600")
-
-        self.partner_label = tk.Label(self.root, text="Partner")
-        self.partner_street_label = tk.Label(self.root, text="Partner Street")
-        self.partner_zip_country_label = tk.Label(self.root, text="Partner ZIP Code")
-        self.invoice_number_label = tk.Label(self.root, text="Invoice Number")
-        self.service_description_label = tk.Label(self.root, text="Service Description")
-        self.service_amount_label = tk.Label(self.root, text="Service Amount")
-        self.service_single_price_label = tk.Label(self.root, text="Service Single Price")
-        self.payment_method_label = tk.Label(self.root, text="Payment Method")
 
         self.payment_methods = {
             "Main Bank": {
@@ -45,64 +34,50 @@ class InvoiceAutomation:
             }
         }
 
-        self.partner_entry = tk.Entry(self.root)
-        self.partner_street_entry = tk.Entry(self.root)
-        self.partner_zip_country_entry = tk.Entry(self.root)
-        self.invoice_number_entry = tk.Entry(self.root)
-        self.service_description_entry = tk.Entry(self.root)
-        self.service_amount_entry = tk.Entry(self.root)
-        self.service_single_price_entry = tk.Entry(self.root)
-        self.payment_method_entry = tk.Entry(self.root)
+        # Store labels and entries in a list of tuples
+        self.fields = [
+            ("Partner", "partner_entry"),
+            ("Partner Street", "partner_street_entry"),
+            ("Partner ZIP Code", "partner_zip_country_entry"),
+            ("Invoice Number", "invoice_number_entry"),
+            ("Service Description", "service_description_entry"),
+            ("Service Amount", "service_amount_entry"),
+            ("Service Single Price", "service_single_price_entry"),
+        ]
 
-        self.payment_method = tk.StringVar(self.root)
-        self.payment_method.set("Main Bank")
+        # Dictionary to hold Entry widgets for later access
+        self.entries = {}
 
-        self.payment_method_dropdown = tk.OptionMenu(self.root, self.payment_method, value="Main Bank", values="Second Bank" "Private Bank")
+        # Create labels and entries dynamically
+        for i, (label_text, entry_attr) in enumerate(self.fields):
+            label = tk.Label(self.root, text=label_text)
+            label.grid(row=i, column=0, sticky="e", padx=5, pady=5)
 
-        self.create_button = tk.Button(self.root, text="Create Invoice", command=self.create_invoice)
+            entry = tk.Entry(self.root)
+            entry.grid(row=i, column=1, sticky="we", padx=5, pady=5)
 
-        padding_options = {"fill": "x", "expand": True, "padx": 5, "pady": 2}
+            setattr(self, entry_attr, entry)  # Set as instance variable
+            self.entries[entry_attr] = entry
 
-        self.partner_label = tk.Label(self.root, text="Partner")
-        self.partner_label.grid(row=0, column=0, sticky="e")
-        self.partner_entry = tk.Entry(self.root)
-        self.partner_entry.grid(row=0, column=1)
-
-        self.partner_street_label = tk.Label(self.root, text="Partner Street")
-        self.partner_street_label.grid(row=1, column=0, sticky="e")
-        self.partner_street_entry = tk.Entry(self.root)
-        self.partner_street_entry.grid(row=1, column=1)
-
-        self.partner_zip_country_label = tk.Label(self.root, text="Partner ZIP Code")
-        self.partner_zip_country_label.grid(row=2, column=0, sticky="e")
-        self.partner_zip_country_entry = tk.Entry(self.root)
-        self.partner_zip_country_entry.grid(row=2, column=1)
-
-        self.invoice_number_label = tk.Label(self.root, text="Invoice Number")
-        self.invoice_number_label.grid(row=3, column=0, sticky="e")
-        self.invoice_number_entry = tk.Entry(self.root)
-        self.invoice_number_entry.grid(row=3, column=1)
-
-        self.service_description_label = tk.Label(self.root, text="Service Description")
-        self.service_description_label.grid(row=4, column=0, sticky="e")
-        self.service_description_entry = tk.Entry(self.root)
-        self.service_description_entry.grid(row=4, column=1)
-
-        self.service_amount_label = tk.Label(self.root, text="Service Amount")
-        self.service_amount_label.grid(row=5, column=0, sticky="e")
-        self.service_amount_entry = tk.Entry(self.root)
-        self.service_amount_entry.grid(row=5, column=1)
-
-        self.service_single_price_label = tk.Label(self.root, text="Service Single Price")
-        self.service_single_price_label.grid(row=6, column=0, sticky="e")
-        self.service_single_price_entry = tk.Entry(self.root)
-        self.service_single_price_entry.grid(row=6, column=1)
-
+        # Payment Method Label
         self.payment_method_label = tk.Label(self.root, text="Payment Method")
-        self.payment_method_label.grid(row=7, column=0, sticky="e")
-        self.payment_method_entry = tk.Entry(self.root)
-        self.payment_method_entry.grid(row=7, column=1)
+        self.payment_method_label.grid(row=7, column=0, sticky="e", padx=5, pady=5)
 
+        # Payment Method Dropdown
+        self.payment_method = tk.StringVar(self.root)
+        self.payment_method.set("Main Bank")  # Default value
+
+        self.payment_method_dropdown = tk.OptionMenu(
+            self.root, self.payment_method, *self.payment_methods.keys()
+        )
+        self.payment_method_dropdown.grid(row=7, column=1, sticky="we", padx=5, pady=5)
+
+        # Create Invoice Button
+        self.create_button = tk.Button(self.root, text="Create Invoice", command=self.create_invoice)
+        self.create_button.grid(row=8, column=0, columnspan=2, pady=20)
+
+        # Make column 1 expand to fill space
+        self.root.grid_columnconfigure(1, weight=1)
 
     def create_invoice(self):
         pass
