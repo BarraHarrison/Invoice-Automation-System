@@ -1,15 +1,16 @@
-import os 
+import os
 import subprocess
-import tkinter as tk 
-import datetime as dt 
-from tkinter import filedialog
-from tkinter import messagebox
-import docx 
+import customtkinter as ctk
+import datetime as dt
+import docx
 
 class InvoiceAutomation:
 
     def __init__(self):
-        self.root = tk.Tk()
+        ctk.set_appearance_mode("System")  
+        ctk.set_default_color_theme("blue")
+
+        self.root = ctk.CTk()
         self.root.title("Invoice Automation")
         self.root.geometry("500x600")
 
@@ -34,7 +35,7 @@ class InvoiceAutomation:
             }
         }
 
-        # Store labels and entries in a list of tuples
+        # Store labels and entries
         self.fields = [
             ("Partner", "partner_entry"),
             ("Partner Street", "partner_street_entry"),
@@ -45,40 +46,36 @@ class InvoiceAutomation:
             ("Service Single Price", "service_single_price_entry"),
         ]
 
-        # Dictionary to hold Entry widgets for later access
         self.entries = {}
 
-        # Create labels and entries dynamically
         for i, (label_text, entry_attr) in enumerate(self.fields):
-            label = tk.Label(self.root, text=label_text)
+            label = ctk.CTkLabel(self.root, text=label_text)
             label.grid(row=i, column=0, sticky="e", padx=5, pady=5)
 
-            entry = tk.Entry(self.root)
+            entry = ctk.CTkEntry(self.root)
             entry.grid(row=i, column=1, sticky="we", padx=5, pady=5)
 
-            setattr(self, entry_attr, entry)  # Set as instance variable
+            setattr(self, entry_attr, entry)
             self.entries[entry_attr] = entry
 
         # Payment Method Label
-        self.payment_method_label = tk.Label(self.root, text="Payment Method")
+        self.payment_method_label = ctk.CTkLabel(self.root, text="Payment Method")
         self.payment_method_label.grid(row=7, column=0, sticky="e", padx=5, pady=5)
 
         # Payment Method Dropdown
-        self.payment_method = tk.StringVar(self.root)
-        self.payment_method.set("Main Bank")  # Default value
-
-        self.payment_method_dropdown = tk.OptionMenu(
-            self.root, self.payment_method, *self.payment_methods.keys()
+        self.payment_method = ctk.StringVar(value="Main Bank")
+        self.payment_method_dropdown = ctk.CTkOptionMenu(
+            self.root,
+            variable=self.payment_method,
+            values=list(self.payment_methods.keys())
         )
         self.payment_method_dropdown.grid(row=7, column=1, sticky="we", padx=5, pady=5)
 
         # Create Invoice Button
-        self.create_button = tk.Button(self.root, text="Create Invoice", command=self.create_invoice)
+        self.create_button = ctk.CTkButton(self.root, text="Create Invoice", command=self.create_invoice)
         self.create_button.grid(row=8, column=0, columnspan=2, pady=20)
 
-        # Make column 1 expand to fill space
         self.root.grid_columnconfigure(1, weight=1)
-
         self.root.mainloop()
 
     def create_invoice(self):
