@@ -1,4 +1,5 @@
 import sys
+import fitz
 from datetime import datetime
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QLineEdit, QVBoxLayout,
@@ -102,6 +103,21 @@ class InvoiceAutomation(QWidget):
         print(f"current_date: {current_date}")
 
         QMessageBox.information(self, "Success", "Invoice created successfully!")
+
+    def generate_invoice_pdf(template_path, output_path, replacements):
+        doc = fitz.open(template_path)
+
+        for page in doc:
+            for key, value in replacements.items():
+                placeholder = f"{{{key}}}"
+                text_instances = page.search_for(placeholder)
+                for inst in text_instances:
+                    page.insert_text(inst[:2], value, fontsize=11, color=(0, 0, 0))
+                    page.add_redact_annot(inst, fill=(1, 1, 1))
+                    page._apply_redactions()
+        
+        doc.save(output_path)
+        doc.close()
 
 
 if __name__ == "__main__":
