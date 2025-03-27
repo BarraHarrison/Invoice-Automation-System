@@ -77,7 +77,8 @@ class InvoiceAutomation(QWidget):
         return True
 
     def handle_create_invoice(self):
-        pass
+        if self.validate_fields():
+            self.create_invoice()
 
     def create_invoice(self):
         print("Creating invoice with the following data:")
