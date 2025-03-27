@@ -96,13 +96,23 @@ class InvoiceAutomation(QWidget):
     def create_invoice(self):
         current_date = datetime.today().strftime("%Y-%m-%d")
 
-        print("Creating invoice with the following data:")
-        for key, entry in self.entries.items():
-            print(f"{key}: {entry.text()}")
-        print(f"Payment Method: {self.payment_dropdown.currentText()}")
-        print(f"current_date: {current_date}")
+        data = {
+            "partner_entry": self.entries["partner_entry"].text(),
+            "partner_zip_country_entry": self.entries["partner_zip_country_entry"].text(),
+            "invoice_number_entry": self.entries["invoice_number_entry"].text(),
+            "service_description_entry": self.entries["service_description_entry"].text(),
+            "service_amount_entry": self.entries["service_amount_entry"].text(),
+            "service_single_price_entry": self.entries["service_single_price_entry"].text(),
+            "payment_method": self.payment_dropdown.currentText(),
+            "current_date": current_date
+        }
 
-        QMessageBox.information(self, "Success", "Invoice created successfully!")
+        output_filename = f'invoice_{data["invoice_number_entry"].replace("#", "")}.pdf'
+        self.generate_invoice_pdf("invoice_template.pdf", output_filename, data)
+
+        print(f"Invoice saved as {output_filename}")
+        QMessageBox.information(self, "Success", f"Invoice saved as {output_filename}")
+
 
     def generate_invoice_pdf(template_path, output_path, replacements):
         doc = fitz.open(template_path)
@@ -114,7 +124,7 @@ class InvoiceAutomation(QWidget):
                 for inst in text_instances:
                     page.insert_text(inst[:2], value, fontsize=11, color=(0, 0, 0))
                     page.add_redact_annot(inst, fill=(1, 1, 1))
-                    page._apply_redactions()
+                    page.apply_redactions()
         
         doc.save(output_path)
         doc.close()
