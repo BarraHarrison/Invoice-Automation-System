@@ -61,5 +61,48 @@ class InvoiceAutomation:
 
         self.create_button = tk.Button(self.root, text="Create Invoice", command=self.create_invoice)
 
+        padding_options = {"fill": "x", "expand": True, "padx": 5, "pady": 2}
+
+        self.partner_label = tk.Label(self.root, text="Partner")
+        self.partner_label.grid(row=0, column=0, sticky="e")
+        self.partner_entry = tk.Entry(self.root)
+        self.partner_entry.grid(row=0, column=1)
+
+        self.partner_street_label = tk.Label(self.root, text="Partner Street")
+        self.partner_street_label.grid(row=1, column=0, sticky="e")
+        self.partner_street_entry = tk.Entry(self.root)
+        self.partner_street_entry.grid(row=1, column=1)
+
+        self.partner_zip_country_label = tk.Label(self.root, text="Partner ZIP Code")
+        self.partner_zip_country_label.grid(row=2, column=0, sticky="e")
+        self.partner_zip_country_entry = tk.Entry(self.root)
+        self.partner_zip_country_entry.grid(row=2, column=1)
+
+        self.invoice_number_label = tk.Label(self.root, text="Invoice Number")
+        self.invoice_number_label.grid(row=3, column=0, sticky="e")
+        self.invoice_number_entry = tk.Entry(self.root)
+        self.invoice_number_entry.grid(row=3, column=1)
+
+        self.service_description_label = tk.Label(self.root, text="Service Description")
+        self.service_description_label.grid(row=4, column=0, sticky="e")
+        self.service_description_entry = tk.Entry(self.root)
+        self.service_description_entry.grid(row=4, column=1)
+
+        self.service_amount_label = tk.Label(self.root, text="Service Amount")
+        self.service_amount_label.grid(row=5, column=0, sticky="e")
+        self.service_amount_entry = tk.Entry(self.root)
+        self.service_amount_entry.grid(row=5, column=1)
+
+        self.service_single_price_label = tk.Label(self.root, text="Service Single Price")
+        self.service_single_price_label.grid(row=6, column=0, sticky="e")
+        self.service_single_price_entry = tk.Entry(self.root)
+        self.service_single_price_entry.grid(row=6, column=1)
+
+        self.payment_method_label = tk.Label(self.root, text="Payment Method")
+        self.payment_method_label.grid(row=7, column=0, sticky="e")
+        self.payment_method_entry = tk.Entry(self.root)
+        self.payment_method_entry.grid(row=7, column=1)
+
+
     def create_invoice(self):
         pass
