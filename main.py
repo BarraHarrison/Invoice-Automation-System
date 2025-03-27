@@ -68,7 +68,7 @@ class InvoiceAutomation(QWidget):
         form_layout.addRow(QLabel("Payment Method"), self.payment_dropdown)
 
         self.create_button = QPushButton("Create Invoice")
-        self.create_button.clicked.connect(self.create_invoice)
+        self.create_button.clicked.connect(self.handle_create_invoice)
 
         layout.addLayout(form_layout)
         layout.addWidget(self.create_button)
@@ -96,6 +96,8 @@ class InvoiceAutomation(QWidget):
         for key, entry in self.entries.items():
             print(f"{key}: {entry.text()}")
         print(f"Payment Method: {self.payment_dropdown.currentText()}")
+
+        QMessageBox.information(self, "Success", "Invoice created successfully!")
 
 
 if __name__ == "__main__":
