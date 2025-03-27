@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QLineEdit, QVBoxLayout,
-      QHBoxLayout, QPushButton, QComboBox, QFormLayout
+      QHBoxLayout, QPushButton, QComboBox, QFormLayout, QMessageBox
 )
 
 class InvoiceAutomation(QWidget):
@@ -63,6 +63,21 @@ class InvoiceAutomation(QWidget):
         layout.addLayout(form_layout)
         layout.addWidget(self.create_button)
         self.setLayout(layout)
+
+
+    def validate_fields(self):
+        for label_text, entry_key in self.fields:
+            if not self.entries[entry_key].text().strip():
+                QMessageBox.warning(
+                    self,
+                    "Missing Information",
+                    f"Please fill in the '{label_text}' field."
+                )
+                return False
+        return True
+
+    def handle_create_invoice(self):
+        pass
 
     def create_invoice(self):
         print("Creating invoice with the following data:")
