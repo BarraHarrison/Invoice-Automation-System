@@ -21,7 +21,7 @@ class InvoiceAutomation:
         self.invoice_number_label = tk.Label(self.root, text="Invoice Number")
         self.service_description_label = tk.Label(self.root, text="Service Description")
         self.service_amount_label = tk.Label(self.root, text="Service Amount")
-        self.service_single_price = tk.Label(self.root, text="Service Single Price")
+        self.service_single_price_label = tk.Label(self.root, text="Service Single Price")
         self.payment_method_label = tk.Label(self.root, text="Payment Method")
 
         self.payment_methods = {
@@ -44,3 +44,12 @@ class InvoiceAutomation:
                 "BIC": "KR128426"
             }
         }
+
+        self.partner_entry = tk.Entry(self.root)
+        self.partner_street_entry = tk.Entry(self.root)
+        self.partner_zip_country_entry = tk.Entry(self.root)
+        self.invoice_number_entry = tk.Entry(self.root)
+        self.service_description_entry = tk.Entry(self.root)
+        self.service_amount_entry = tk.Entry(self.root)
+        self.service_single_price_entry = tk.Entry(self.root)
+        self.payment_method_entry = tk.Entry(self.root)
