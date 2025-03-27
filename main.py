@@ -121,11 +121,23 @@ class InvoiceAutomation(QWidget):
             for key, value in replacements.items():
                 placeholder = f"{{{key}}}"
                 text_instances = page.search_for(placeholder)
+
                 for inst in text_instances:
-                    page.insert_text(inst[:2], value, fontsize=11, color=(0, 0, 0))
+                    # Redact the placeholder text
                     page.add_redact_annot(inst, fill=(1, 1, 1))
-                    page.apply_redactions()
-        
+                page.apply_redactions()
+
+                for inst in text_instances:
+                    # Write the new value AFTER redaction is applied
+                    x, y = inst.x0, inst.y0
+                    page.insert_text(
+                        (x, y),
+                        value,
+                        fontname="helv",  # Helvetica (standard)
+                        fontsize=12,
+                        color=(0, 0, 0),  # Black
+                    )
+
         doc.save(output_path)
         doc.close()
 
