@@ -23,3 +23,24 @@ class InvoiceAutomation:
         self.service_amount_label = tk.Label(self.root, text="Service Amount")
         self.service_single_price = tk.Label(self.root, text="Service Single Price")
         self.payment_method_label = tk.Label(self.root, text="Payment Method")
+
+        self.payment_methods = {
+            "Main Bank": {
+                "Recipient": "BH Company",
+                "Bank": "Bank of Ireland",
+                "IBAN": "AB12 3456 7891 1234",
+                "BIC": "IEI44556"
+            },
+            "Second Bank": {
+                "Recipient": "BH Company",
+                "Bank": "Bank of Scotland",
+                "IBAN": "SC12 8765 7891 3451",
+                "BIC": "SCI46536"
+            },
+            "Private Bank": {
+                "Recipient": "Barra Harrison",
+                "Bank": "Shinhan Bank",
+                "IBAN": "DF45 9826 7712 8361",
+                "BIC": "KR128426"
+            }
+        }
