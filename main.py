@@ -1,4 +1,5 @@
 import sys
+from datetime import datetime
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QLineEdit, QVBoxLayout,
       QHBoxLayout, QPushButton, QComboBox, QFormLayout, QMessageBox
@@ -92,10 +93,13 @@ class InvoiceAutomation(QWidget):
             self.create_invoice()
 
     def create_invoice(self):
+        current_date = datetime.today().strftime("%Y-%m-%d")
+
         print("Creating invoice with the following data:")
         for key, entry in self.entries.items():
             print(f"{key}: {entry.text()}")
         print(f"Payment Method: {self.payment_dropdown.currentText()}")
+        print(f"current_date: {current_date}")
 
         QMessageBox.information(self, "Success", "Invoice created successfully!")
 
