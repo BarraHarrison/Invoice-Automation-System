@@ -53,3 +53,13 @@ class InvoiceAutomation:
         self.service_amount_entry = tk.Entry(self.root)
         self.service_single_price_entry = tk.Entry(self.root)
         self.payment_method_entry = tk.Entry(self.root)
+
+        self.payment_method = tk.StringVar(self.root)
+        self.payment_method.set("Main Bank")
+
+        self.payment_method_dropdown = tk.OptionMenu(self.root, self.payment_method, value="Main Bank", values="Second Bank" "Private Bank")
+
+        self.create_button = tk.Button(self.root, text="Create Invoice", command=self.create_invoice)
+
+    def create_invoice(self):
+        pass
