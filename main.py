@@ -114,7 +114,7 @@ class InvoiceAutomation(QWidget):
         QMessageBox.information(self, "Success", f"Invoice saved as {output_filename}")
 
 
-    def generate_invoice_pdf(template_path, output_path, replacements):
+    def generate_invoice_pdf(self, template_path, output_path, replacements):
         doc = fitz.open(template_path)
 
         for page in doc:
