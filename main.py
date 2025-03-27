@@ -31,6 +31,16 @@ class InvoiceAutomation(QWidget):
             }
         }
 
+        self.fields = [
+            ("Partner", "partner_entry"),
+            ("Partner Street", "partner_street_entry"),
+            ("Partner ZIP Code", "partner_zip_country_entry"),
+            ("Invoice Number", "invoice_number_entry"),
+            ("Service Description", "service_description_entry"),
+            ("Service Amount", "service_amount_entry"),
+            ("Service Single Price", "service_single_price_entry"),
+        ]
+
         self.entries = {}
         self.init_ui()
 
@@ -67,11 +77,12 @@ class InvoiceAutomation(QWidget):
 
     def validate_fields(self):
         for label_text, entry_key in self.fields:
-            if not self.entries[entry_key].text().strip():
+            entry = self.entries[entry_key]
+            if not entry.text().strip():
                 QMessageBox.warning(
                     self,
-                    "Missing Information",
-                    f"Please fill in the '{label_text}' field."
+                    "Missing Field",
+                    f"The '{label_text}' field is required."
                 )
                 return False
         return True
