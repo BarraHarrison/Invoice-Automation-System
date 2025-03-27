@@ -79,5 +79,11 @@ class InvoiceAutomation:
         # Make column 1 expand to fill space
         self.root.grid_columnconfigure(1, weight=1)
 
+        self.root.mainloop()
+
     def create_invoice(self):
         pass
+
+
+if __name__ == "__main__":
+    InvoiceAutomation()
