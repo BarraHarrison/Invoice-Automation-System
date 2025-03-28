@@ -129,6 +129,7 @@ class InvoiceAutomation(QWidget):
 
         print(f"Invoice saved as {output_filename}")
         QMessageBox.information(self, "Success", f"Invoice saved as {output_filename}")
+        self.clear_form()
 
 
     def generate_invoice_pdf(self, template_path, output_path, replacements):
@@ -174,6 +175,12 @@ class InvoiceAutomation(QWidget):
 
         doc.save(output_path)
         doc.close()
+
+
+    def clear_form(self):
+        for entry in self.entries.values():
+            entry.clear()
+        self.payment_dropdown.setCurrentText("Main Bank")
 
 
 if __name__ == "__main__":
