@@ -2,6 +2,7 @@ import sys
 import fitz
 import smtplib
 import ssl
+import os
 from datetime import datetime
 from email.message import EmailMessage
 from PyQt5.QtWidgets import (
