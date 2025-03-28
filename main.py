@@ -131,14 +131,22 @@ class InvoiceAutomation(QWidget):
                     # Write the new value AFTER redaction is applied
                     x, y = inst.x0, inst.y0
 
-                    if key in ["invoice_number_entry", "partner_entry", "partner_zip_country_entry"]:
-                        y += 5
+                    if key in [
+                        "invoice_number_entry",
+                        "partner_entry",
+                        "partner_zip_country_entry",
+                        "current_date"
+                            ]:
+                        y += 15
+                        font_size = 14
+                    else:
+                        font_size = 12
 
                     page.insert_text(
                         (x, y),
                         value,
                         fontname="helv",  # Helvetica (standard)
-                        fontsize=12,
+                        fontsize=font_size,
                         color=(0, 0, 0),  # Black
                     )
 
