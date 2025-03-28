@@ -3,3 +3,4 @@ venv/
 invoices/
 invoice_2.pdf
 invoice_19.pdf
+.env

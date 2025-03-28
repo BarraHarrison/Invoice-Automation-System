@@ -3,6 +3,7 @@ import fitz
 import smtplib
 import ssl
 import os
+from dotenv import load_dotenv
 from datetime import datetime
 from email.message import EmailMessage
 from PyQt5.QtWidgets import (
@@ -10,6 +11,11 @@ from PyQt5.QtWidgets import (
       QHBoxLayout, QPushButton, QComboBox, QFormLayout, QMessageBox
 )
 from PyQt5.QtCore import QTimer
+
+load_dotenv()
+
+EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 class InvoiceAutomation(QWidget):
     def __init__(self):
@@ -153,8 +159,8 @@ class InvoiceAutomation(QWidget):
 
 
     def send_email_with_attachment(self, recipient_email, subject, body, attachment_path):
-        sender_email = "your_email@gmail.com"
-        sender_password = "your_app_password"
+        sender_email = EMAIL_ADDRESS
+        sender_password = EMAIL_PASSWORD
 
         message = EmailMessage()
         message["From"] = sender_email
