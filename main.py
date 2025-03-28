@@ -52,7 +52,7 @@ class InvoiceAutomation(QWidget):
             ("Service Description", "service_description_entry"),
             ("Service Amount", "service_amount_entry"),
             ("Service Single Price", "service_single_price_entry"),
-            ("Recipient Email", "recipient_email_entry"),
+            ("Recipient Email", "recipient_email_entry")
         ]
 
         self.entries = {}
@@ -65,17 +65,8 @@ class InvoiceAutomation(QWidget):
         layout = QVBoxLayout()
         form_layout = QFormLayout()
 
-        fields = [
-            ("Partner", "partner_entry"),
-            ("Partner Street", "partner_street_entry"),
-            ("Partner ZIP Code", "partner_zip_country_entry"),
-            ("Invoice Number", "invoice_number_entry"),
-            ("Service Description", "service_description_entry"),
-            ("Service Amount", "service_amount_entry"),
-            ("Service Single Price", "service_single_price_entry"),
-        ]
 
-        for label_text, entry_key in fields:
+        for label_text, entry_key in self.fields:
             entry = QLineEdit()
             self.entries[entry_key] = entry
             form_layout.addRow(QLabel(label_text), entry)
