@@ -130,6 +130,10 @@ class InvoiceAutomation(QWidget):
                 for inst in text_instances:
                     # Write the new value AFTER redaction is applied
                     x, y = inst.x0, inst.y0
+
+                    if key in ["invoice_number_entry", "partner_entry", "partner_zip_country_entry"]:
+                        y += 5
+
                     page.insert_text(
                         (x, y),
                         value,
