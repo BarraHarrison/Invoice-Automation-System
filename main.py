@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QLineEdit, QVBoxLayout,
       QHBoxLayout, QPushButton, QComboBox, QFormLayout, QMessageBox
 )
+from PyQt5.QtCore import QTimer
 
 class InvoiceAutomation(QWidget):
     def __init__(self):
@@ -45,6 +46,9 @@ class InvoiceAutomation(QWidget):
 
         self.entries = {}
         self.init_ui()
+        self.ready_label = QLabel("")
+        self.ready_label.setStyleSheet("color: green; font-weight: bold;")
+        self.layout().addWidget(self.ready_label)
 
     def init_ui(self):
         layout = QVBoxLayout()
@@ -181,6 +185,10 @@ class InvoiceAutomation(QWidget):
         for entry in self.entries.values():
             entry.clear()
         self.payment_dropdown.setCurrentText("Main Bank")
+
+        self.ready_label.setText("✅ Ready for the next invoice!")
+
+        QTimer.singleShot(3000, lambda: self.ready_label.setText(""))
 
 
 if __name__ == "__main__":
