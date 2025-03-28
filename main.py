@@ -96,6 +96,18 @@ class InvoiceAutomation(QWidget):
     def create_invoice(self):
         current_date = datetime.today().strftime("%Y-%m-%d")
 
+        # Extract payment method details
+        selected_bank = self.payment_methods[self.payment_dropdown.currentText()]
+
+        try:
+            quantity = float(self.entries["service_amount_entry"].text())
+            unit_price = float(self.entries["service_single_price_entry"].text())
+            sub_total = f"${quantity * unit_price:.2f}"
+        except ValueError:
+            QMessageBox.warning(self, "Invalid Input", "Please enter valid numbers for amount and price.")
+            return
+
+        # Prepare data for PDF replacement
         data = {
             "partner_entry": self.entries["partner_entry"].text(),
             "partner_zip_country_entry": self.entries["partner_zip_country_entry"].text(),
@@ -104,11 +116,16 @@ class InvoiceAutomation(QWidget):
             "service_amount_entry": self.entries["service_amount_entry"].text(),
             "service_single_price_entry": self.entries["service_single_price_entry"].text(),
             "payment_method": self.payment_dropdown.currentText(),
-            "current_date": current_date
+            "current_date": current_date,
+            "sub_total": sub_total,
+            "bank_recipient": selected_bank["Recipient"],
+            "bank_name": selected_bank["Bank"],
+            "bank_iban": selected_bank["IBAN"],
+            "bank_bic": selected_bank["BIC"]
         }
 
         output_filename = f'invoice_{data["invoice_number_entry"].replace("#", "")}.pdf'
-        self.generate_invoice_pdf("invoice_template.pdf", output_filename, data)
+        self.generate_invoice_pdf("bank_invoice_template.pdf", output_filename, data)
 
         print(f"Invoice saved as {output_filename}")
         QMessageBox.information(self, "Success", f"Invoice saved as {output_filename}")
