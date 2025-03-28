@@ -152,7 +152,12 @@ class InvoiceAutomation(QWidget):
                         "invoice_number_entry",
                         "partner_entry",
                         "partner_zip_country_entry",
-                        "current_date"
+                        "current_date",
+                        "bank_recipient",
+                        "bank_name",
+                        "bank_iban",
+                        "bank_bic",
+                        "sub_total"
                             ]:
                         y += 15
                         font_size = 14
@@ -162,9 +167,9 @@ class InvoiceAutomation(QWidget):
                     page.insert_text(
                         (x, y),
                         value,
-                        fontname="helv",  # Helvetica (standard)
+                        fontname="helv",  
                         fontsize=font_size,
-                        color=(0, 0, 0),  # Black
+                        color=(0, 0, 0), 
                     )
 
         doc.save(output_path)
