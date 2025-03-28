@@ -167,7 +167,7 @@ class InvoiceAutomation(QWidget):
         context = ssl.create_default_context()
 
         try:
-            with smtplib.SMTP_SSL("stmp.gmail.com", 465, context=context) as server:
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
                 server.login(sender_email, sender_password)
                 server.send_message(message)
             print("Email sent successfully.")
