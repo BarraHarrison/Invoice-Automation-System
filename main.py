@@ -1,6 +1,9 @@
 import sys
 import fitz
+import smtplib
+import ssl
 from datetime import datetime
+from email.message import EmailMessage
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QLineEdit, QVBoxLayout,
       QHBoxLayout, QPushButton, QComboBox, QFormLayout, QMessageBox
@@ -42,6 +45,7 @@ class InvoiceAutomation(QWidget):
             ("Service Description", "service_description_entry"),
             ("Service Amount", "service_amount_entry"),
             ("Service Single Price", "service_single_price_entry"),
+            ("Recipient Email", "recipient_email_entry"),
         ]
 
         self.entries = {}
@@ -97,11 +101,14 @@ class InvoiceAutomation(QWidget):
         if self.validate_fields():
             self.create_invoice()
 
+
     def create_invoice(self):
         current_date = datetime.today().strftime("%Y-%m-%d")
 
         # Extract payment method details
         selected_bank = self.payment_methods[self.payment_dropdown.currentText()]
+
+        recipient_email = self.entries["recipient_email_entry"].text()
 
         try:
             quantity = float(self.entries["service_amount_entry"].text())
@@ -133,7 +140,43 @@ class InvoiceAutomation(QWidget):
 
         print(f"Invoice saved as {output_filename}")
         QMessageBox.information(self, "Success", f"Invoice saved as {output_filename}")
+
+        self.send_email_with_attachment(
+            recipient_email,
+            subject="Your Invoice",
+            body="Attached is your invoice. Thank you!",
+            attachment_path=output_filename
+        )
+
         self.clear_form()
+
+
+    def send_email_with_attachment(self, recipient_email, subject, body, attachment_path):
+        sender_email = "your_email@gmail.com"
+        sender_password = "your_app_password"
+
+        message = EmailMessage()
+        message["From"] = sender_email
+        message["To"] = recipient_email
+        message["Subject"] = subject
+        message.set_content(body)
+
+        with open(attachment_path, "rb") as f:
+            file_data = f.read()
+            file_name = os.path.basename(attachment_path)
+            message.add_attachment(file_data, maintype="application", subtype="pdf", filename=file_name)
+
+        context = ssl.create_default_context()
+
+        try:
+            with smtplib.SMTP_SSL("stmp.gmail.com", 465, context=context) as server:
+                server.login(sender_email, sender_password)
+                server.send_message(message)
+            print("Email sent successfully.")
+            QMessageBox.information(self, "Email Sent", f"Invoice sent to {recipient_email}")
+        except Exception as e:
+            print(f"Error sending email: {e}")
+            QMessageBox.warning(self, "Email Failed", "There was an error sending the email.")
 
 
     def generate_invoice_pdf(self, template_path, output_path, replacements):
