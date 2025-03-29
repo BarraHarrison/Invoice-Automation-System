@@ -186,6 +186,8 @@ class InvoiceAutomation(QWidget):
                 placeholder = f"{{{key}}}"
                 text_instances = page.search_for(placeholder)
 
+                print(f"Found {len(text_instances)} instance(s) of {placeholder}")
+
                 for inst in text_instances:
                     # Redact the placeholder text
                     page.add_redact_annot(inst, fill=(1, 1, 1))
