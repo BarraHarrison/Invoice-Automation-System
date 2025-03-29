@@ -134,7 +134,7 @@ class InvoiceAutomation(QWidget):
         }
 
         output_filename = f'invoice_{data["invoice_number_entry"].replace("#", "")}.pdf'
-        self.generate_invoice_pdf("bank_invoice_template.pdf", output_filename, data)
+        self.generate_invoice_pdf("updated_invoice_template.pdf", output_filename, data)
 
         print(f"Invoice saved as {output_filename}")
         QMessageBox.information(self, "Success", f"Invoice saved as {output_filename}")
