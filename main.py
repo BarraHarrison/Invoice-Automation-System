@@ -222,7 +222,6 @@ class InvoiceAutomation(QWidget):
                         color=(0, 0, 0), 
                     )
 
-                    print(f"Inserting '{value}' for {key} at position ({x}, {y})")
 
         doc.save(output_path)
         doc.close()
