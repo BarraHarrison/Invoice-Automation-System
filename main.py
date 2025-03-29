@@ -119,6 +119,7 @@ class InvoiceAutomation(QWidget):
         # Prepare data for PDF replacement
         data = {
             "partner_entry": self.entries["partner_entry"].text(),
+            "partner_street_entry": self.entries["partner_street_entry"].text(),
             "partner_zip_country_entry": self.entries["partner_zip_country_entry"].text(),
             "invoice_number_entry": self.entries["invoice_number_entry"].text(),
             "service_description_entry": self.entries["service_description_entry"].text(),
