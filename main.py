@@ -201,6 +201,7 @@ class InvoiceAutomation(QWidget):
                         "invoice_number_entry",
                         "partner_entry",
                         "partner_zip_country_entry",
+                        "partner_street_entry",
                         "current_date",
                         "bank_recipient",
                         "bank_name",
@@ -220,6 +221,8 @@ class InvoiceAutomation(QWidget):
                         fontsize=font_size,
                         color=(0, 0, 0), 
                     )
+
+                    print(f"Inserting '{value}' for {key} at position ({x}, {y})")
 
         doc.save(output_path)
         doc.close()
